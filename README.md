@@ -1,6 +1,6 @@
 # roll_dice_app
 
-A new Flutter project.
+A basic Roll Dice app for flutter beginners. 
 
 ## Getting Started
 
