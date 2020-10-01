@@ -12,12 +12,12 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   int leftDiceNumber = 1;
   int rightDiceNumber = 2;
+  bool animate_flag = true;
 
   AnimationController _controller;
   var curvedAnimation;
   @override
   void initState() {
-   
     animate();
     super.initState();
   }
@@ -25,10 +25,10 @@ class _HomeScreenState extends State<HomeScreen>
   void animate() {
     _controller =
         AnimationController(duration: Duration(seconds: 1), vsync: this);
-   
+
     curvedAnimation =
         CurvedAnimation(parent: _controller, curve: Curves.bounceOut);
-    
+
     curvedAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         leftDiceNumber = Random().nextInt(6) + 1;
@@ -44,13 +44,18 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void dispose() {
-   
     super.dispose();
   }
 
   void roll() {
-    
-    _controller.forward();
+    if (animate_flag)
+      _controller.forward();
+    else {
+      setState(() {
+        leftDiceNumber = Random().nextInt(6) + 1;
+        rightDiceNumber = Random().nextInt(6) + 1;
+      });
+    }
   }
 
   @override
@@ -92,7 +97,13 @@ class _HomeScreenState extends State<HomeScreen>
           RaisedButton(
             onPressed: roll,
             child: Text("Roll"),
-          )
+          ),
+          Switch(
+             
+              value: animate_flag,
+              onChanged: (value) {
+                animate_flag = value;
+              })
         ],
       ),
     );
