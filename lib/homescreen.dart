@@ -99,10 +99,10 @@ class _HomeScreenState extends State<HomeScreen>
             child: Text("Roll"),
           ),
           Switch(
-             
               value: animate_flag,
               onChanged: (value) {
                 animate_flag = value;
+                setState(() {});
               })
         ],
       ),
